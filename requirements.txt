@@ -1,0 +1,6 @@
+# Core Dependencies
+llama-cpp-python==0.2.64
+streamlit==1.35.0
+
+# Optional enhancements (safe to remove if not needed)
+watchdog==4.0.0         # for auto-reloading

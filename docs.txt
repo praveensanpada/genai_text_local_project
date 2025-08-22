@@ -1,0 +1,136 @@
+genai_text_local/
+├── models/
+│   └── llama2/
+│       └── llama-2-7b-chat.Q4_K_M.gguf  # <-- Downloaded manually
+├── generate_text_local.py
+├── requirements.txt
+└── README.md
+
+python3 -m venv genai_text_local_venv
+source genai_text_local_venv/bin/activate  # Linux/macOS
+# or
+venv\Scripts\activate     # Windows
+
+requirements.txt
+llama-cpp-python==0.2.64
+
+pip install -r requirements.txt
+
+llama-2-7b-chat.Q4_K_M.gguf
+
+genai_text_local/models/llama2/llama-2-7b-chat.Q4_K_M.gguf
+
+from llama_cpp import Llama
+import os
+
+# Make sure this matches your downloaded file
+MODEL_PATH = "./models/llama2/llama-2-7b-chat.Q4_K_M.gguf"
+
+# Initialize the model
+llm = Llama(
+    model_path=MODEL_PATH,
+    n_ctx=2048,
+    n_threads=os.cpu_count() or 4,
+    use_mlock=True,
+    verbose=True,
+)
+
+# Prompt the user
+user_prompt = input("🧠 Enter your prompt:\n> ")
+
+# Run inference
+print("\n⏳ Generating response...\n")
+response = llm(user_prompt, max_tokens=200)
+generated = response["choices"][0]["text"]
+
+# Output
+print("💬 Generated Text:\n")
+print(generated.strip())
+
+python generate_text_local.py
+
+🧠 Enter your prompt:
+> Create a slogan for a fitness tracking app.
+
+💬 Generated Text:
+"Track more. Train smart. Perform better."
+
+
+# GenAI Local Text Generator (LLaMA2)
+
+## Setup
+```bash
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+
+streamlit run gen_text_ai_app.py
+
+
+================================================================================================================
+
+✅ 1. 🧠 LLaMA 2 (Meta AI)
+| Property         | Value                                    |
+| ---------------- | ---------------------------------------- |
+| Variants         | 7B, 13B, 70B                             |
+| License          | Non-commercial                           |
+| GGUF Support     | ✅ (via TheBloke)                         |
+| Performance (7B) | Slow on CPU, great on GPU                |
+| Style            | Instruction-following, chatty, logical   |
+| Tasks            | General purpose, coding, Q\&A, summaries |
+
+✅ 2. 🧠 Mistral 7B / Mixtral 8x7B (Mistral AI)
+| Property     | Value                            |
+| ------------ | -------------------------------- |
+| Type         | Decoder-only LLM                 |
+| License      | Apache 2.0 (Commercial use OK ✅) |
+| Performance  | Fast + high-quality responses    |
+| GGUF Support | ✅ (via TheBloke)                 |
+| Reasoning    | 🟢🟢🟢🟢🟢                       |
+
+✅ 3. 🧠 Phi-2 (Microsoft)
+| Property | Value                                 |
+| -------- | ------------------------------------- |
+| Params   | 1.3B (Tiny & Fast)                    |
+| License  | MIT ✅ (Commercial use OK)             |
+| GGUF     | ✅ (via TheBloke)                      |
+| Speed    | ⚡ Super fast on CPU                   |
+| Quality  | Excellent for factual and short texts |
+
+✅ 4. 🧠 TinyLLaMA (1.1B) – 100% community-trained
+| Property     | Value                                  |
+| ------------ | -------------------------------------- |
+| Open weights | ✅                                      |
+| License      | Apache 2.0 ✅                           |
+| Size         | \~1GB (fast on CPU)                    |
+| GGUF         | ✅                                      |
+| Performance  | Good enough for short creative writing |
+
+✅ 5. 🧠 Falcon (Technology Innovation Institute)
+| Model | Falcon-7B, Falcon-RW |
+| License | Apache 2.0 ✅ |
+| Strength | Descriptive text, summarization |
+| GGUF | ✅ (via TheBloke) |
+
+📝 Comparison Summary
+| Model         | Size | License        | Speed (CPU)  | Quality 🧠 | Best For                       |
+| ------------- | ---- | -------------- | ------------ | ---------- | ------------------------------ |
+| **LLaMA2**    | 7B   | Non-commercial | 🟠 Slow      | 🟢🟢🟢🟢🟢 | Smart assistant, chat          |
+| **Mistral**   | 7B   | ✅ Commercial   | 🟡 Medium    | 🟢🟢🟢🟢🟢 | Formal writing, instructions   |
+| **Phi-2**     | 1.3B | ✅ Commercial   | 🟢 Fast      | 🟢🟢🟢🟢   | Educational, logical summaries |
+| **TinyLLaMA** | 1.1B | ✅ Commercial   | 🟢 Very Fast | 🟢🟢🟢     | Creative lines, slogans        |
+| **Falcon**    | 7B   | ✅ Commercial   | 🟡 Medium    | 🟢🟢🟢🟢   | News-like, structured text     |
+
+🧠 What Kind of Text Can Be Generated?
+| Prompt Type                 | Example                                                                     |
+| --------------------------- | --------------------------------------------------------------------------- |
+| 📢 **Marketing Copy**       | *“Write a catchy Instagram ad for a travel app.”*                           |
+| 🎓 **Educational**          | *“Explain how a black hole forms in simple terms.”*                         |
+| 📋 **Listicles / Bullets**  | *“Give 5 benefits of using solar energy.”*                                  |
+| 🧾 **Product Descriptions** | *“Describe a smartwatch with GPS, heart-rate monitor, and sleep tracking.”* |
+| 💬 **Chatbot Responses**    | *“How can I start a business with no money?”*                               |
+| ✍️ **Blog/Essay**           | *“Write an introduction for a blog on sustainable fashion.”*                |
+| 📚 **Story/Poetry**         | *“Write a 4-line poem about dreams and stars.”*                             |
+| 💼 **Resume Content**       | *“Generate a summary for a data analyst with 3 years of experience.”*       |
+
+================================================================================================================
